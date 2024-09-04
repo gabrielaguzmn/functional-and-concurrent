@@ -33,7 +33,7 @@ package object recursion {
    */
   def fibonacciI(n: Int): Int = {
     def fibIter(a: Int, b: Int, n: Int): Int = {
-      if (n == 0) a
+      if (n == 0) b
       else fibIter(b, a + b, n - 1)
     }
 

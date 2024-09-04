@@ -16,15 +16,15 @@ println(mcdEBez(56, 98))    // (14, 3, -1)
 
 
 // Pruebas fibonacciI
-println(fibonacciI(5)) // 5
-println(fibonacciI(10)) // 55
-println(fibonacciI(20)) // 6765
-println(fibonacciI(0))  // 0
+println(fibonacciI(5)) // 8
+println(fibonacciI(10)) // 89
+println(fibonacciI(20)) // 10946
+println(fibonacciI(0))  // 1
 println(fibonacciI(1))  // 1
 
 // Pruebas fibonacciA
 println(fibonacciA(0)) // 1
-println(fibonacciA(5))
-println(fibonacciA(10))
-println(fibonacciA(20))
-println(fibonacciA(6))
+println(fibonacciA(5)) // 8
+println(fibonacciA(10)) // 89
+println(fibonacciA(20)) // 10946
+println(fibonacciA(6)) // 13
