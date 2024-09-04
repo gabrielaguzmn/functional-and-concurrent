@@ -1,5 +1,19 @@
 package object recursion {
 
+  /**
+   * Ejercicio 1.1.1
+   * Máximo común divisor a partir del teorema fundamental del álgebra
+   */
+
+  def mcdTFA(ln: List[Int], lm: List[Int], primos: List[Int]) : Int ={
+   if (primos.isEmpty) 1
+    else{
+      val minExp = Math.min(ln.head, lm.head)
+      val mcd = Math.pow(primos.head, minExp).toInt
+      mcd * mcdTFA(ln.tail, lm.tail, primos.tail)
+    }
+  }
+
 
   /**
    * Ejercicio 1.1.2
@@ -26,3 +40,14 @@ package object recursion {
     fibIter(0, 1, n)
   }
 }
+
+  /**
+   * Ejercicio 1.2.1
+   * Fibonacci recursión de árbol
+   */
+
+  def fibonacciA(n: Int) : Int = {
+    if (n == 0) 1
+    else if (n <= 2) n
+    else fibonacciA(n - 1) + fibonacciA(n - 2)
+  }
