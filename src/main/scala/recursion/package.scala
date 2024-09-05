@@ -47,7 +47,7 @@ package object recursion {
    */
 
   def fibonacciA(n: Int) : Int = {
-    if (n == 0) 1
-    else if (n <= 2) n
-    else fibonacciA(n - 1) + fibonacciA(n - 2)
+    if (n == 0 || n==1 ) 1
+    else fibonacciA(n-1)+
+      fibonacciA(n-2)
   }

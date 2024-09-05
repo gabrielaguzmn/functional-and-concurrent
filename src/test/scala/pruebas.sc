@@ -10,9 +10,9 @@ mcdTFA(List(5, 3, 2), List(1, 4, 6), List(3, 2, 1)) // 24
 // Pruebas mcdEBez
 println(mcdEBez(963, 657))  // (9, -15, 22)
 println(mcdEBez(120, 500))  // (20, -4, 1)
-println(mcdEBez(48, 18))    // (6, -1, 3)
-println(mcdEBez(270, 192))  // (6, -7, 10)
-println(mcdEBez(56, 98))    // (14, 3, -1)
+println(mcdEBez(18, 18))    // (6, -1, 3)
+println(mcdEBez(500, 120))  // (6, -7, 10)
+println(mcdEBez(1, 3))    // (14, 3, -1)
 
 
 // Pruebas fibonacciI
