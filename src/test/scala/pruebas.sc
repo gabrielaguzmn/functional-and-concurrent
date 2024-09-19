@@ -1,30 +1,24 @@
-import recursion._
+import Circuitos._
 
-// Pruebas mcdTFA
-println(mcdTFA(List(1, 1, 1), List(1, 1, 1), List(2, 3, 5))) // 30
-println(mcdTFA(List(3, 0, 2), List(2, 1, 3), List(2, 3, 5))) // 100
-println(mcdTFA(List(6, 3, 2), List(5, 3, 2), List(2, 2, 3))) // 2304
-println(mcdTFA(List(4, 0, 0), List(3, 0, 0), List(2, 3, 5))) // 8
-println(mcdTFA(List(4, 2, 1, 3, 0), List(3, 1, 2, 3, 1), List(2, 3, 5, 7, 11))) // 41160
-println(mcdTFA(List(2), List(1), List(7))) // 1
+val chipNot = crearChipUnario((x: Int) => 1 - x)
+chipNot(List(0)) // List(1)
+chipNot(List(1)) // List(0)
 
-// Pruebas mcdEBez
-println(mcdEBez(963, 657))  // (9, -15, 22)
-println(mcdEBez(120, 500))  // (20, -4, 1)
-println(mcdEBez(18, 18))    // (18, 0, 1)
-println(mcdEBez(500, 120))  // (20, 1, -4)
-println(mcdEBez(1, 3))    // (1, 1, 0)
+val chipAnd = crearChipBinario((x: Int, y: Int) => (x * y))
+chipAnd(List(1,0)) // List(0)
+chipAnd(List(1,1)) // List(1)
 
-// Pruebas fibonacciI
-println(fibonacciI(5)) // 8
-println(fibonacciI(10)) // 89
-println(fibonacciI(20)) // 10946
-println(fibonacciI(0))  // 1
-println(fibonacciI(1))  // 1
+val chipOr = crearChipBinario((x: Int, y: Int) => x + y - (x * y))
+chipOr(List(1,1)) // List(1)
+chipOr(List(1,0)) // List(1)
 
-// Pruebas fibonacciA
-println(fibonacciA(0)) // 1
-println(fibonacciA(5)) // 8
-println(fibonacciA(10)) // 89
-println(fibonacciA(20)) // 10946
-println(fibonacciA(6)) // 13
+ha(List(0,0)) // List(0, 0)
+ha(List(0,1)) // List(0, 1)
+halfAdder(List(1,0)) // List(0, 1)
+halfAdder(List(1,1)) // List(1, 0)
+
+fa(List(0,0,0)) // List(0,0)
+fa(List(1,1,1)) // List(1,1)
+fullAdder(List(0,1,1)) // List(1,0)
+fullAdder(List(0,1,0)) // List(0,1)
+
