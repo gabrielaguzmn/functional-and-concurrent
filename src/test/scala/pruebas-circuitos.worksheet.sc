@@ -22,3 +22,20 @@ fullAdder(List(1,1,1)) // List(1,1)
 fullAdder(List(0,1,1)) // List(1,0)
 fullAdder(List(0,1,0)) // List(0,1)
 fullAdder(List(1,1,0)) // List(1,0)
+
+val add_1 = adder(1)
+add_1(List(1) ++ List(1)) // list(1,0)
+
+adder(1) (List(1) ++ List (1)) // list (1,0)
+adder(1) (List(0) ++ List (0)) // list (0,0)
+adder(1) (List(1) ++ List (0)) // list (0,1)
+adder(1) (List(0) ++ List (1)) // list (0,1)
+
+adder(2) (List(1,0) ++ List (0,1)) // list (0,1,1)
+adder(2) (List(1,1) ++ List (0,1)) // list (1,0,1)
+
+adder(3) (List(1,0,1) ++ List (0,0,0)) // list (0,1,0,1)
+adder(3) (List(1,0,1) ++ List (1,0,1)) // list (1,0,1,0)
+
+val ad4= adder(4)
+ad4(List(1,0,1,1) ++ List(1,0,1,0)) //  list(1,0,0,1,0)

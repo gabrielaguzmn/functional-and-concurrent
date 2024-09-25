@@ -73,4 +73,27 @@ package object Circuitos {
 
   val fa = fullAdder
 
+  /**
+   * Ejercicio 1.4
+   * Sumador
+   */
+
+  def adder(n: Int): Chip = {
+    def sumaBits(primerNumero: List[Int], segundoNumero: List[Int], carryIn: Int, acc: List[Int]): List[Int] = {
+      if (primerNumero.isEmpty) carryIn :: acc
+      else {
+        val b1 = primerNumero.head
+        val b2 = segundoNumero.head
+        val sumaI = or(and(not(b1), b2), and(b1, not(b2)))
+        val newCarry = or(and(b1, b2), and(carryIn, or(b1, b2)))
+        val sumaTotal = or(and(not(sumaI), carryIn), and(sumaI, not(carryIn)))
+        sumaBits(primerNumero.tail, segundoNumero.tail, newCarry, sumaTotal :: acc)
+      }
+    }
+    input => {
+      val primerNumero = input.take(n)
+      val segundoNumero = input.drop(n)
+      sumaBits(primerNumero, segundoNumero, 0, Nil)
+    }
+  }
 }
