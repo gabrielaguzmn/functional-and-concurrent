@@ -100,25 +100,7 @@ package object Newton {
         // Caso base: la expresión ya está limpia
         case _ => e
     }
-    /*def limpiar(e: Expr): Expr = e match {
-        case Suma(Numero(0), e2) => limpiar(e2)
-        case Suma(e1, Numero(0)) => limpiar(e1)
-        case Prod(Numero(1), e2) => limpiar(e2)
-        case Prod(e1, Numero(1)) => limpiar(e1)
-        case Prod(Numero(0), _) => Numero(0)
-        case Prod(_, Numero(0)) => Numero(0)
-        case Resta(e1, Numero(0)) => limpiar(e1)
-        case Div(e1, Numero(1)) => limpiar(e1)
-        case Expo(e1, Numero(1)) => limpiar(e1)
-        case Suma(e1, e2) => Suma(limpiar(e1), limpiar(e2))
-        case Prod(e1, e2) => Prod(limpiar(e1), limpiar(e2))
-        case Resta(e1, e2) => Resta(limpiar(e1), limpiar(e2))
-        case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
-        case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
-        case Logaritmo(e1) => Logaritmo(limpiar(e1))
-        case _ => e
-    }*/
-
+    
 
     /**
       * Ejercicio 1.5
