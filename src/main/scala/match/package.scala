@@ -91,6 +91,7 @@ package object Newton {
       */   
     
     def raizNewton(f: Expr, a: Atomo, x0: Double, ba:(Expr, Atomo, Double)=> Boolean): Double = {
-        if (ba(f,a,x0)) x0 else raizNewton(f,a,x0 - evaluar(f,a,x0)/evaluar(derivar(f,a),a,x0),ba) 
+        val x1= x0 - evaluar(f,a,x0)/evaluar(derivar(f,a),a,x0)
+        if (ba(f,a,x0)) x0 else raizNewton(f,a,x1,ba) 
     }
 }
