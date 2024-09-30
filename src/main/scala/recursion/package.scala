@@ -33,13 +33,12 @@ package object recursion {
    */
   def fibonacciI(n: Int): Int = {
     def fibIter(a: Int, b: Int, n: Int): Int = {
-      if (n == 0) b
+      if (n == 0) a
       else fibIter(b, a + b, n - 1)
     }
 
-    fibIter(0, 1, n)
+    fibIter(1, 1, n)
   }
-}
 
   /**
    * Ejercicio 1.2.1
@@ -51,3 +50,4 @@ package object recursion {
     else fibonacciA(n-1)+
       fibonacciA(n-2)
   }
+}
