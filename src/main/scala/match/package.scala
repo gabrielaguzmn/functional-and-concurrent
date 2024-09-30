@@ -64,26 +64,43 @@ package object Newton {
       * Ejercicio 1.4
       * Limpiando expresiones
       */
-
     def limpiar(e: Expr): Expr = e match {
+        // Sumas con cero
         case Suma(Numero(0), e2) => limpiar(e2)
         case Suma(e1, Numero(0)) => limpiar(e1)
+        case Suma(e1, e2) =>
+            (limpiar(e1), limpiar(e2)) match {
+                case (Numero(0), e2Limpio) => e2Limpio
+                case (e1Limpio, Numero(0)) => e1Limpio
+                case (e1Limpio, e2Limpio) => Suma(e1Limpio, e2Limpio)
+            }
+
+        // Productos con 1 o 0
         case Prod(Numero(1), e2) => limpiar(e2)
         case Prod(e1, Numero(1)) => limpiar(e1)
         case Prod(Numero(0), _) => Numero(0)
         case Prod(_, Numero(0)) => Numero(0)
+
+        // Restas con 0
         case Resta(e1, Numero(0)) => limpiar(e1)
+
+        // División por 1
         case Div(e1, Numero(1)) => limpiar(e1)
+
+        // Exponenciación por 1
         case Expo(e1, Numero(1)) => limpiar(e1)
-        case Suma(e1, e2) => Suma(limpiar(e1), limpiar(e2))
+
+        // Recursión en otras expresiones
         case Prod(e1, e2) => Prod(limpiar(e1), limpiar(e2))
         case Resta(e1, e2) => Resta(limpiar(e1), limpiar(e2))
         case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
         case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
         case Logaritmo(e1) => Logaritmo(limpiar(e1))
+
+        // Caso base: la expresión ya está limpia
         case _ => e
     }
-
+    
 
     /**
       * Ejercicio 1.5
