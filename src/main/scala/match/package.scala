@@ -64,6 +64,7 @@ package object Newton {
       * Ejercicio 1.4
       * Limpiando expresiones
       */
+      
     def limpiar(e: Expr): Expr = e match {
         // Sumas con cero
         case Suma(Numero(0), e2) => limpiar(e2)
