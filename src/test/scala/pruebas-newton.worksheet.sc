@@ -7,6 +7,7 @@ val expr4 = Suma(expr2, Logaritmo(expr2))
 val expr5 = Resta(Expo(Atomo('x'), Numero(5.0)), Prod(Numero(4.0),Atomo('x')))
 
 // Pruebas mostrar
+
 mostrar(Suma(Atomo('x'), Numero(2))) // (x + 2.0)
 mostrar(Prod(Atomo('x'), Atomo('x'))) // (x * x)
 mostrar(Expo(Atomo('x'), Numero(3))) // (x ^ 3.0)
@@ -17,8 +18,6 @@ mostrar(expr2)
 mostrar(expr3)
 mostrar(expr4)
 mostrar(expr5)
-
-
 
 // Pruebas derivar
 
@@ -37,12 +36,13 @@ evaluar(expr4, Atomo('x'), 6.0) // 13.125514365379045
 evaluar(expr5, Atomo('x'), 2.0) // 24.0
 
 // Pruebas limpiar
+
 limpiar(derivar(Suma(Atomo('k'),Prod(Numero(3.0),Atomo('x'))),Atomo('x'))) // numero (3.0)
 mostrar(limpiar(derivar(Suma(Atomo('k'),Prod(Numero (3.0) , Atomo('x'))), Atomo('x')))) // 3.0
 limpiar(Suma(Numero(0), Atomo('x'))) // atomo(x)
 limpiar(Prod(Numero(1), Atomo('x'))) // atomo (x)
 limpiar(Prod(Numero(0), Atomo('x'))) // numero(0,0)
-limpiar(Expo(Atomo('x'), Numero(0))) // atomo(x)
+limpiar(Expo(Atomo('x'), Numero(0))) // (1.0)
 limpiar(Suma(Numero(0), Prod(Numero(1), Atomo('x')))) // atomo(x)
 limpiar(Suma(Numero(0), Prod(Numero(3), Atomo('x')))) // prod(numero(3.0),atomo(x))
 limpiar(Suma(Numero(0), Numero(0))) // numero(0,0)
@@ -52,7 +52,7 @@ limpiar(Resta(Numero(0), Numero(5))) // (-5.0)
 limpiar(Resta(Numero(5), Numero(0))) // (5.0)
 limpiar(Div(Numero(0),Numero(2))) // (0.0)
 mostrar(limpiar(derivar(Prod(Atomo('x'), Div(Numero(5), Atomo('x'))), Atomo('x'))))
-mostrar(Suma(Div(Numero(5.0),Atomo('x')),Prod(Atomo('x'),Div(Resta(Numero(0.0),Numero(5.0)),Expo(Atomo('x'),Numero(2.0))))))
+
 
 
 // Pruebas RaizNewton
@@ -62,7 +62,7 @@ def buenaAprox (f: Expr , a: Atomo , d: Double ): Boolean = {
     }
 
 raizNewton(expr1, Atomo('x'), 3.0, buenaAprox) // 2.704163133995671
-raizNewton(expr2, Atomo('x'), 2.0, buenaAprox) // 1.0000008411696406
+raizNewton(expr2, Atomo('x'), 2.0, buenaAprox) // 1.0000774890317474
 raizNewton(expr3, Atomo('x'), 2.5, buenaAprox) // 2.03125
 raizNewton(expr4, Atomo('x'), 4.0, buenaAprox) // 1.4231252002993577
 raizNewton(expr5, Atomo('x'), 2.0, buenaAprox) // 1.4142136175485605
