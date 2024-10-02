@@ -42,12 +42,19 @@ mostrar(limpiar(derivar(Suma(Atomo('k'),Prod(Numero (3.0) , Atomo('x'))), Atomo(
 limpiar(Suma(Numero(0), Atomo('x'))) // atomo(x)
 limpiar(Prod(Numero(1), Atomo('x'))) // atomo (x)
 limpiar(Prod(Numero(0), Atomo('x'))) // numero(0,0)
-limpiar(Expo(Atomo('x'), Numero(1))) // atomo(x)
+limpiar(Expo(Atomo('x'), Numero(0))) // atomo(x)
 limpiar(Suma(Numero(0), Prod(Numero(1), Atomo('x')))) // atomo(x)
 limpiar(Suma(Numero(0), Prod(Numero(3), Atomo('x')))) // prod(numero(3.0),atomo(x))
 limpiar(Suma(Numero(0), Numero(0))) // numero(0,0)
 limpiar(Suma(Numero(5), Numero(0))) // Numero(5.0)
 limpiar(Prod(Suma(Numero(0), Atomo('x')), Numero(2))) // prod(atomo(x), numero(2.0))
+limpiar(Resta(Numero(0), Numero(5))) // (-5.0)
+limpiar(Resta(Numero(5), Numero(0))) // (5.0)
+limpiar(Div(Numero(0),Numero(2))) // (0.0)
+mostrar(limpiar(derivar(Prod(Atomo('x'), Div(Numero(5), Atomo('x'))), Atomo('x'))))
+mostrar(Suma(Div(Numero(5.0),Atomo('x')),Prod(Atomo('x'),Div(Resta(Numero(0.0),Numero(5.0)),Expo(Atomo('x'),Numero(2.0))))))
+
+
 // Pruebas RaizNewton
 
 def buenaAprox (f: Expr , a: Atomo , d: Double ): Boolean = {
