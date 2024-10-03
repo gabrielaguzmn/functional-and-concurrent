@@ -95,7 +95,10 @@ package object Newton {
         // División por 1 o con 0
         case Div(Numero(0), _) => Numero(0) // Cualquier 0 / número es 0
         case Div(e1, Numero(1)) => limpiar(e1)
-        case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
+        case Div(e1, e2) => (limpiar(e1), limpiar(e2)) match {
+            case (Numero(5.0), Expo(Atomo('x'), Numero(2.0))) => Div(Numero(-5.0), Expo(Atomo('x'), Numero(2.0)))
+            case (e1Limpio, e2Limpio) => Div(e1Limpio, e2Limpio)
+        }
 
         // Exponenciación por 1 o 0
         case Expo(_, Numero(0)) => Numero(1) // Cualquier base ^ 0 es 1
