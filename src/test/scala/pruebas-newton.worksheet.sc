@@ -48,7 +48,7 @@ limpiar(Suma(Numero(0), Prod(Numero(3), Atomo('x')))) // prod(numero(3.0),atomo(
 limpiar(Suma(Numero(0), Numero(0))) // numero(0,0)
 limpiar(Suma(Numero(5), Numero(0))) // Numero(5.0)
 limpiar(Prod(Suma(Numero(0), Atomo('x')), Numero(2))) // prod(atomo(x), numero(2.0))
-limpiar(Resta(Numero(0), Numero(5))) // prod(numero(-1.0),numero(-5.0))
+limpiar(Resta(Numero(0), Numero(5))) // prod(numero(-1.0),numero(5.0))
 limpiar(Resta(Numero(5), Numero(0))) // (5.0)
 limpiar(Div(Numero(0),Numero(2))) // (0.0)
 limpiar(Suma(Div(Numero(5.0),Atomo('x')),Prod(Atomo('x'),Div(Resta(Numero(0.0),Numero(5.0)),Expo(Atomo('x'),Numero(2.0))))))
