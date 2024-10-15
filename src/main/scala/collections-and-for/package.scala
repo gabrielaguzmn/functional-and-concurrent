@@ -36,13 +36,25 @@ package object MatchingProblem {
         } yield matching
     }
 
-    /*def weightedMatchings (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : List[(Matching, Int) ] = {
-
+    def weightedMatchings (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences): List[(Matching, Int) ] = {
+        val validMatchings = matchings(n)
+        for{
+            matching <- validMatchings
+            weights = (for {
+                match_ <- matching
+                pilot = match_._1 - 1
+                copilot = match_._2 - 1
+                pilotPreference = pilotPrefs(pilot)(copilot)
+                copilotPreference = navigPrefs(copilot)(pilot)
+                weight = pilotPreference * copilotPreference
+            } yield weight).sum
+        } yield (matching, weights)
     }
 
+/*
     def bestMatching (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : (Matching, Int) = {
-        
+        val matchingsWithWeight = weightedMatchings(n, pilotPrefs, navigPrefs)
+
     }
 */
-
 }
