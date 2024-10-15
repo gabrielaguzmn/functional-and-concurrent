@@ -23,16 +23,26 @@ package object MatchingProblem {
         }
     }
 
-    def matchings (n: Int) : List[Matching] = {
-
+    def isValidMatching(matching: Matching, n: Int): Boolean = {
+        val copilots = for ((_, copilot) <- matching) yield copilot
+        copilots.toSet == (1 to n).toSet
     }
 
-    def weightedMatchings (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : List[(Matching, Int) ] = {
+    def matchings (n: Int) : List[Matching] = {
+        val allMatchings = possibleMatchings(n)
+        for{
+            matching <- allMatchings 
+            if (isValidMatching(matching, n)) 
+        } yield matching
+    }
+
+    /*def weightedMatchings (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : List[(Matching, Int) ] = {
 
     }
 
     def bestMatching (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : (Matching, Int) = {
         
     }
+*/
 
 }
