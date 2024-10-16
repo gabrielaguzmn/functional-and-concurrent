@@ -5,21 +5,20 @@ package object MatchingProblem {
     type Preferences = Vector[Vector[Int]]
 
     def matchByElement(i: Int, n: Int): List[(Int, Int)] = {
-        (1 to n).toList.map(j => (i, j))
-    }
+        for (j <- 1 to n) yield (i, j)
+    }.toList
 
     def matchsByElements(n: Int): List[List[(Int, Int)]] = {
-        (1 to n).toList.map(i => matchByElement(i, n))
-    }
+        for (i <- 1 to n) yield matchByElement(i, n)
+    }.toList
 
     def possibleMatchings(n: Int): List[List[(Int, Int)]] = {
         val allMatches = matchsByElements(n)
-        allMatches.foldRight(List(List.empty[(Int, Int)])) {
-            (matches, acc) =>
-                for {
-                    matchPair <- matches
-                    matchList <- acc
-                } yield matchPair :: matchList
+        allMatches.foldRight(List(List.empty[(Int, Int)])) { (matches, acc) =>
+            for {
+                matchPair <- matches
+                matchList <- acc
+            } yield matchPair :: matchList
         }
     }
 
