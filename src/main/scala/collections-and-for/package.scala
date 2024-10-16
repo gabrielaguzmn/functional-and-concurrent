@@ -41,9 +41,9 @@ package object MatchingProblem {
         for{
             matching <- validMatchings
             weights = (for {
-                match_ <- matching
-                pilot = match_._1 - 1
-                copilot = match_._2 - 1
+                tuple <- matching
+                pilot = tuple._1 - 1
+                copilot = tuple._2 - 1
                 pilotPreference = pilotPrefs(pilot)(copilot)
                 copilotPreference = navigPrefs(copilot)(pilot)
                 weight = pilotPreference * copilotPreference
@@ -51,10 +51,14 @@ package object MatchingProblem {
         } yield (matching, weights)
     }
 
-/*
     def bestMatching (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : (Matching, Int) = {
         val matchingsWithWeight = weightedMatchings(n, pilotPrefs, navigPrefs)
-
+        val bestWeight = (for ((_, weight) <- matchingsWithWeight) yield weight).max
+        val bestMatching = for {
+            matching <- matchingsWithWeight
+            if matching._2 == bestWeight 
+        } yield matching
+        bestMatching.head
     }
-*/
+
 }
