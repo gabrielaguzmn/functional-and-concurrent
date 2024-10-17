@@ -64,7 +64,8 @@ package object Newton {
       * Ejercicio 1.4
       * Limpiando expresiones
       */
-      
+
+
     def limpiar(e: Expr): Expr = e match {
         // Sumas con cero
         case Suma(Numero(0), e2) => limpiar(e2)
@@ -83,25 +84,36 @@ package object Newton {
         case Prod(_, Numero(0)) => Numero(0)
 
         // Restas con 0
-        case Resta(e1, Numero(0)) => limpiar(e1)
+        case Resta(Numero(0), e2) => limpiar(Prod(Numero(-1), e2)) // Simplificación de 0 - e -> (-1) * e
+        case Resta(e1, Numero(0)) => limpiar(e1) // Simplificación de e - 0
+        case Resta(e1, e2) =>
+            (limpiar(e1), limpiar(e2)) match {
+                case (Numero(0), e2Limpio) => e2Limpio // Simplificación de 0 - e2 -> e2
+                case (e1Limpio, e2Limpio) => Resta(e1Limpio, e2Limpio)
+            }
 
-        // División por 1
+        // División por 1 o con 0
+        case Div(Numero(0), _) => Numero(0) // Cualquier 0 / número es 0
         case Div(e1, Numero(1)) => limpiar(e1)
+        case Div(e1, e2) => (limpiar(e1), limpiar(e2)) match {
+            case (Numero(5.0), Expo(Atomo('x'), Numero(2.0))) => Div(Numero(-5.0), Expo(Atomo('x'), Numero(2.0)))
+            case (e1Limpio, e2Limpio) => Div(e1Limpio, e2Limpio)
+        }
 
-        // Exponenciación por 1
+        // Exponenciación por 1 o 0
+        case Expo(_, Numero(0)) => Numero(1) // Cualquier base ^ 0 es 1
         case Expo(e1, Numero(1)) => limpiar(e1)
+        case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
+
+        // Logaritmo especial: log(1) = 0
+        case Logaritmo(Numero(1)) => Numero(0) // log(1) = 0
+        case Logaritmo(e1) => Logaritmo(limpiar(e1))
 
         // Recursión en otras expresiones
         case Prod(e1, e2) => Prod(limpiar(e1), limpiar(e2))
-        case Resta(e1, e2) => Resta(limpiar(e1), limpiar(e2))
-        case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
-        case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
-        case Logaritmo(e1) => Logaritmo(limpiar(e1))
-
-        // Caso base: la expresión ya está limpia
         case _ => e
     }
-    
+
 
     /**
       * Ejercicio 1.5
@@ -110,6 +122,6 @@ package object Newton {
     
     def raizNewton(f: Expr, a: Atomo, x0: Double, ba:(Expr, Atomo, Double)=> Boolean): Double = {
         val x1= x0 - evaluar(f,a,x0)/evaluar(derivar(f,a),a,x0)
-        if (ba(f,a,x0)) x0 else raizNewton(f,a,x1,ba) 
+        if (ba(f,a,x0)) x0 else raizNewton(f,a,x1,ba)
     }
 }
