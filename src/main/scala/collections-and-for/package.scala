@@ -4,13 +4,28 @@ package object MatchingProblem {
     type Matching = List[ Match ]
     type Preferences = Vector[Vector[Int]]
 
+    /**
+   * Ejercicio 1.1
+   * Emparejamientos posibles de un piloto
+   */
+
     def matchByElement(i: Int, n: Int): List[(Int, Int)] = {
         for (j <- 1 to n) yield (i, j)
     }.toList
 
+    /**
+   * Ejercicio 1.2
+   * Emparejamientos posibles de todos los pilotos
+   */
+
     def matchsByElements(n: Int): List[List[(Int, Int)]] = {
         for (i <- 1 to n) yield matchByElement(i, n)
     }.toList
+
+    /**
+   * Ejercicio 1.3
+   * Posibles emparejamientos
+   */
 
     def possibleMatchings(n: Int): List[List[(Int, Int)]] = {
         val allMatches = matchsByElements(n)
@@ -21,6 +36,11 @@ package object MatchingProblem {
             } yield matchPair :: matchList
         }
     }
+
+    /**
+   * Ejercicio 1.4
+   * Calculando los emparejamientos validos 
+   */    
 
     def isValidMatching(matching: Matching, n: Int): Boolean = {
         val copilots = for ((_, copilot) <- matching) yield copilot
@@ -34,6 +54,11 @@ package object MatchingProblem {
             if (isValidMatching(matching, n)) 
         } yield matching
     }
+
+    /**
+   * Ejercicio 1.5
+   * Calculando los pesos de los emparejamientos validos
+   */
 
     def weightedMatchings (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences): List[(Matching, Int) ] = {
         val validMatchings = matchings(n)
@@ -50,6 +75,11 @@ package object MatchingProblem {
         } yield (matching, weights)
     }
 
+    /**
+   * Ejercicio 1.6
+   * Calculando el mejor emparejamiento 
+   */
+
     def bestMatching (n: Int, pilotPrefs: Preferences, navigPrefs: Preferences) : (Matching, Int) = {
         val matchingsWithWeight = weightedMatchings(n, pilotPrefs, navigPrefs)
         val bestWeight = (for ((_, weight) <- matchingsWithWeight) yield weight).max
@@ -59,5 +89,4 @@ package object MatchingProblem {
         } yield matching
         bestMatching.head
     }
-
 }
