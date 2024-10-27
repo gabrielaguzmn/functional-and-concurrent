@@ -49,7 +49,7 @@ package object kmedianas2D {
   }
 
   def clasificarSeq(puntos: Seq[Punto], medianas: Seq[Punto]): Map[Punto, Seq[Punto]] = {
-    // Implementación pendiente
+    puntos.groupBy(punto => hallarPuntoMasCercano(punto, medianas))
   }
 
   def actualizarSeq(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
@@ -58,7 +58,9 @@ package object kmedianas2D {
 
   @tailrec
   def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
-    // Implementación pendiente
+    medianasViejas.zip(medianasNuevas).forall { case (vieja, nueva) =>
+      vieja.distanciaAlCuadrado(nueva) < eta
+    }
   }
 
   @tailrec
@@ -83,7 +85,7 @@ package object kmedianas2D {
   }
 
   def actualizarPar(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
-    // Implementación pendiente
+    medianasViejas.par.map(mediana => calculePromedioPar(mediana, clasif.getOrElse(mediana, Seq()))).toList
   }
 
   def hayConvergenciaPar(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
@@ -92,6 +94,9 @@ package object kmedianas2D {
 
   @tailrec
   final def kMedianasPar(puntos: Seq[Punto], medianas: Seq[Punto], eta: Double): Seq[Punto] = {
-    // Implementación pendiente
+    val clasificacion = clasificarPar(10)(puntos, medianas)
+    val medianasNuevas = actualizarPar(clasificacion, medianas)
+    if (hayConvergenciaPar(eta, medianas, medianasNuevas)) medianasNuevas
+    else kMedianasPar(puntos, medianasNuevas, eta)
   }
 }
