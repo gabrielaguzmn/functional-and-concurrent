@@ -63,7 +63,7 @@ package object kmedianas2D {
   @tailrec
   def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
     medianasViejas.zip(medianasNuevas).forall { case (vieja, nueva) =>
-      vieja.distanciaAlCuadrado(nueva) < eta
+      vieja.distanciaAlCuadrado(nueva) <= eta
     }
   }
 
@@ -108,8 +108,19 @@ package object kmedianas2D {
     medianasViejas.par.map(mediana => calculePromedioPar(mediana, clasif.getOrElse(mediana, Seq()))).toList
   }
 
+  def converge(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]) : Boolean = {
+    medianasViejas.zip(medianasNuevas).forall { case (vieja, nueva) =>
+      vieja.distanciaAlCuadrado(nueva) <= eta
+    }
+  }
+
   def hayConvergenciaPar(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
-    // Implementacion pendiente
+    val (medianasViejas1, medianasViejas2) = medianasViejas.splitAt(medianasViejas.size / 2)
+    val (medianasNuevas1, medianasNuevas2) = medianasNuevas.splitAt(medianasNuevas.size / 2)
+    val (convergencia1, convergencia2) = parallel(
+      converge(eta, medianasViejas1, medianasNuevas1),
+      converge(eta, medianasViejas2, medianasNuevas2))
+    convergencia1 && convergencia2
   }
 
   @tailrec
