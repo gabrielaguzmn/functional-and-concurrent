@@ -53,8 +53,12 @@ package object kmedianas2D {
   }
 
   def actualizarSeq(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
-    // Implementación pendiente
+    for{
+      mediana <- medianasViejas
+      medianaActualizada = calculePromedioSeq(mediana, clasif.getOrElse(mediana, Seq()))
+    } yield medianaActualizada
   }
+
 
   @tailrec
   def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
@@ -65,7 +69,10 @@ package object kmedianas2D {
 
   @tailrec
   final def kMedianasSeq(puntos: Seq[Punto], medianas: Seq[Punto], eta: Double): Seq[Punto] = {
-    // Implementación pendiente
+    val clasification = clasificarSeq(puntos, medianas)
+    val medianasActualizadas = actualizarSeq(clasification, medianas)
+    if (hayConvergenciaSeq(eta, medianas, medianasActualizadas)) medianasActualizadas
+    else kMedianasSeq(puntos, medianasActualizadas, eta)
   }
 
 // Versiones paralelas
@@ -81,15 +88,28 @@ package object kmedianas2D {
   }
 
   def clasificarPar(umb: Int)(puntos: Seq[Punto], medianas: Seq[Punto]): Map[Punto, Seq[Punto]] = {
-    // Implementación pendiente
+    if (puntos.length > umb){
+      val (left, right) = puntos.splitAt(puntos.size / 2)
+      val (leftMap, rightMap) = parallel(clasificarPar(umb)(left, medianas), clasificarPar(umb)(right, medianas))
+      val clasification = (for {
+        key <- leftMap.keySet ++ rightMap.keySet
+      } yield {
+      val leftValues = leftMap.getOrElse(key, Seq())
+      val rightValues = rightMap.getOrElse(key, Seq())
+      key -> (leftValues ++ rightValues)
+      }).toMap
+      clasification
+    }
+    else clasificarSeq(puntos, medianas)
   }
+
 
   def actualizarPar(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
     medianasViejas.par.map(mediana => calculePromedioPar(mediana, clasif.getOrElse(mediana, Seq()))).toList
   }
 
   def hayConvergenciaPar(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
-    // Implementación pendiente
+    // Implementacion pendiente
   }
 
   @tailrec

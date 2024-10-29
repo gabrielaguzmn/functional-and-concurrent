@@ -12,6 +12,11 @@ package object Benchmark {
     timeA1
   }
 
+  def umbral(npuntos:Int):Int = {
+  // Si npuntos= 2^n, entonces el umbral será 2^(n/2)
+    math.pow(2, ((math.log(npuntos)/math.log(2))/2).toInt).toInt
+  }
+
   def tiemposKmedianas(puntos:Seq[Punto], k:Int, eta:Double) = {
 
     val medianas = inicializarMedianas(k, puntos)
