@@ -61,10 +61,10 @@ package object kmedianas2D {
 
 
   @tailrec
-  def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]): Boolean = {
-    medianasViejas.zip(medianasNuevas).forall { case (vieja, nueva) =>
-      vieja.distanciaAlCuadrado(nueva) < eta
-    }
+  def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto], index: Int = 0): Boolean = {
+    if (index >= medianasViejas.length) true
+    else if (medianasViejas(index).distanciaAlCuadrado(medianasNuevas(index)) >= eta) false
+    else hayConvergenciaSeq(eta, medianasViejas, medianasNuevas, index + 1)
   }
 
   @tailrec
