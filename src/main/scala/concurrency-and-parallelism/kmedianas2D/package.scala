@@ -31,13 +31,13 @@ package object kmedianas2D {
     (0 until k).map(_ => puntos(rand.nextInt(puntos.length)))
   }
 
-// Clasificar puntos
   def hallarPuntoMasCercano(p: Punto, medianas: Seq[Punto]): Punto = {
     assert(medianas.nonEmpty)
     medianas.minBy(p.distanciaAlCuadrado)
   }
 
 // Versiones secuenciales
+
   def calculePromedioSeq(medianaVieja: Punto, puntos: Seq[Punto]): Punto = {
     if (puntos.isEmpty) medianaVieja
     else {
@@ -48,9 +48,19 @@ package object kmedianas2D {
     }
   }
 
+  /**
+   * Ejercicio 1.1
+   * Clasificar puntos, version secuencial
+   */
+
   def clasificarSeq(puntos: Seq[Punto], medianas: Seq[Punto]): Map[Punto, Seq[Punto]] = {
     puntos.groupBy(punto => hallarPuntoMasCercano(punto, medianas))
   }
+
+  /**
+   * Ejercicio 2.1
+   * Actualizar puntos, version secuencial
+   */
 
   def actualizarSeq(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
     for{
@@ -59,6 +69,10 @@ package object kmedianas2D {
     } yield medianaActualizada
   }
 
+  /**
+   * Ejercicio 3.1
+   * Verificar convergencia, version secuencial
+   */
 
   @tailrec
   def hayConvergenciaSeq(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto], index: Int = 0): Boolean = {
@@ -66,6 +80,11 @@ package object kmedianas2D {
     else if (medianasViejas(index).distanciaAlCuadrado(medianasNuevas(index)) >= eta) false
     else hayConvergenciaSeq(eta, medianasViejas, medianasNuevas, index + 1)
   }
+
+  /**
+   * Ejercicio 4.1
+   * Implementacion de algoritmo KMeans, version secuencial
+   */
 
   @tailrec
   final def kMedianasSeq(puntos: Seq[Punto], medianas: Seq[Punto], eta: Double): Seq[Punto] = {
@@ -76,6 +95,7 @@ package object kmedianas2D {
   }
 
 // Versiones paralelas
+
   def calculePromedioPar(medianaVieja: Punto, puntos: Seq[Punto]): Punto = {
     if (puntos.isEmpty) medianaVieja
     else {
@@ -86,6 +106,11 @@ package object kmedianas2D {
       )
     }
   }
+
+  /**
+   * Ejercicio 1.2
+   * Clasificar puntos, version paralela
+   */
 
   def clasificarPar(umb: Int)(puntos: Seq[Punto], medianas: Seq[Punto]): Map[Punto, Seq[Punto]] = {
     if (puntos.length > umb){
@@ -103,10 +128,19 @@ package object kmedianas2D {
     else clasificarSeq(puntos, medianas)
   }
 
+  /**
+   * Ejercicio 2.2
+   * Actualizar puntos, version paralela
+   */
 
   def actualizarPar(clasif: Map[Punto, Seq[Punto]], medianasViejas: Seq[Punto]): Seq[Punto] = {
     medianasViejas.par.map(mediana => calculePromedioPar(mediana, clasif.getOrElse(mediana, Seq()))).toList
   }
+
+  /**
+   * Ejercicio 3.2
+   * Verificar convergencia, version paralela
+   */
 
   def converge(eta: Double, medianasViejas: Seq[Punto], medianasNuevas: Seq[Punto]) : Boolean = {
     medianasViejas.zip(medianasNuevas).forall { case (vieja, nueva) =>
@@ -122,6 +156,11 @@ package object kmedianas2D {
       converge(eta, medianasViejas2, medianasNuevas2))
     convergencia1 && convergencia2
   }
+
+  /**
+   * Ejercicio 4.2
+   * Implementacion de algoritmo KMeans, version paralela
+   */
 
   @tailrec
   final def kMedianasPar(puntos: Seq[Punto], medianas: Seq[Punto], eta: Double): Seq[Punto] = {
